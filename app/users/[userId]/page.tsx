@@ -1,6 +1,7 @@
 import getUser from "@/app/lib/getUser";
 import getUserPost from "@/app/lib/getuserpost";
 import { Suspense } from "react";
+import UserPosts from "./components/UserPosts";
 
 type Params = {
   params: {
@@ -12,14 +13,14 @@ export default async function UserPage({ params: { userId } }: Params) {
   const userPostsData: Promise<Post[]> = getUserPost(userId);
 
   // const [user, userPosts] = await Promise.all([userData, userPostsData]);
-  const user = await userData
+  const user = await userData;
 
   return (
     <>
       <h2>{user.name}</h2>
       <br />
       <Suspense fallback={<h2>Loading....</h2>}>
-        <UserPosts posts={userPosts} />
+        <UserPosts promise={userPostsData} />
       </Suspense>
     </>
   );
